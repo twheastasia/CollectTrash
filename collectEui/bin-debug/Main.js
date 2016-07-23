@@ -144,6 +144,17 @@ var Main = (function (_super) {
         }
     };
     p.createGameScene = function () {
+        var startGameBtn = new eui.Button;
+        startGameBtn.label = "开始捡垃圾游戏";
+        startGameBtn.left = 100;
+        startGameBtn.top = 200;
+        startGameBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onStartGameBtnClicked, this);
+        this.addChild(startGameBtn);
+        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
+        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
+        // RES.getResAsync("description", this.startAnimation, this);
+    };
+    p.onStartGameBtnClicked = function () {
         var sky = this.createBitmapByName("bg_png");
         this.addChild(sky);
         var resetBtn = new eui.Button;
@@ -181,9 +192,6 @@ var Main = (function (_super) {
         this.qishuBounds.y = this.qishuGarbage.y;
         this.addTrashes();
         this.addChild(this.wholeSP);
-        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
-        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        // RES.getResAsync("description", this.startAnimation, this);
     };
     p.removeOtherImageMoveListeners = function () {
         for (var i = 0; i < this.spArray.length; i++) {

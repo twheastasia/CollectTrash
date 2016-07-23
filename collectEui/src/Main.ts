@@ -149,6 +149,19 @@ class Main extends eui.UILayer {
     private currentClickedImageIndex = 0;
 
     private createGameScene():void {
+        var startGameBtn:eui.Button = new eui.Button;
+        startGameBtn.label = "开始捡垃圾游戏";
+        startGameBtn.left = 100;
+        startGameBtn.top = 200;
+        startGameBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onStartGameBtnClicked, this);
+        this.addChild(startGameBtn);
+
+        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
+        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
+        // RES.getResAsync("description", this.startAnimation, this);
+    }
+
+    private onStartGameBtnClicked(){
         var sky:egret.Bitmap = this.createBitmapByName("bg_png");
         this.addChild(sky);
 
@@ -191,10 +204,6 @@ class Main extends eui.UILayer {
         this.addTrashes();
     
         this.addChild(this.wholeSP);
-
-        //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
-        // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        // RES.getResAsync("description", this.startAnimation, this);
     }
 
     private removeOtherImageMoveListeners() {
@@ -281,7 +290,7 @@ class Main extends eui.UILayer {
     
   
 
-    private showResultPanel() {
+    private showResultPanel() { 
         var panel:eui.Panel = new eui.Panel();
         if(this.rightNumber > this.trashCount * 0.6){
             panel.title = "恭喜你！过关了！";
