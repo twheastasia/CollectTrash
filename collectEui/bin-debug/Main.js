@@ -26,15 +26,6 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-var MyPanel = (function (_super) {
-    __extends(MyPanel, _super);
-    function MyPanel() {
-        _super.apply(this, arguments);
-    }
-    var d = __define,c=MyPanel,p=c.prototype;
-    return MyPanel;
-}(eui.Panel));
-egret.registerClass(MyPanel,'MyPanel');
 var Main = (function (_super) {
     __extends(Main, _super);
     function Main() {
@@ -154,44 +145,59 @@ var Main = (function (_super) {
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
         // RES.getResAsync("description", this.startAnimation, this);
     };
+    p.onBackBtnClicked = function () {
+        this.wholeSP.visible = false;
+    };
     p.onStartGameBtnClicked = function () {
-        var sky = this.createBitmapByName("bg_png");
-        this.addChild(sky);
-        var resetBtn = new eui.Button;
-        resetBtn.label = "重新开始";
-        resetBtn.right = 0;
-        resetBtn.top = 0;
-        resetBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.restartGame, this);
-        // var wholeSP:egret.Sprite = new egret.Sprite;
-        this.wholeSP = new eui.UILayer;
-        this.wholeSP.width = this.stage.stageWidth;
-        this.wholeSP.height = this.stage.stageHeight;
-        this.wholeSP.addChild(resetBtn);
-        this.result1 = new egret.TextField;
-        this.setText(this.result1, "答对： " + this.rightNumber);
-        this.wholeSP.addChild(this.result1);
-        this.result2 = new egret.TextField;
-        this.setText(this.result2, "答错： " + this.wrongNumber);
-        this.result2.y = 30;
-        this.wholeSP.addChild(this.result2);
-        this.oushuGarbage = new eui.Image;
-        this.oushuGarbage.texture = RES.getRes("oushu_png");
-        this.oushuGarbage.x = (this.wholeSP.width / 2 - this.oushuGarbage.width) / 2;
-        this.oushuGarbage.y = (this.wholeSP.height - this.oushuGarbage.height);
-        this.wholeSP.addChild(this.oushuGarbage);
-        this.oushuBounds = this.oushuGarbage.getBounds();
-        this.oushuBounds.x = this.oushuGarbage.x;
-        this.oushuBounds.y = this.oushuGarbage.y;
-        this.qishuGarbage = new eui.Image;
-        this.qishuGarbage.texture = RES.getRes("qishu_png");
-        this.qishuGarbage.x = this.wholeSP.width / 2 + (this.wholeSP.width / 2 - this.qishuGarbage.width) / 2;
-        this.qishuGarbage.y = (this.wholeSP.height - this.qishuGarbage.height);
-        this.wholeSP.addChild(this.qishuGarbage);
-        this.qishuBounds = this.qishuGarbage.getBounds();
-        this.qishuBounds.x = this.qishuGarbage.x;
-        this.qishuBounds.y = this.qishuGarbage.y;
-        this.addTrashes();
-        this.addChild(this.wholeSP);
+        if (this.wholeSP == null) {
+            var sky = this.createBitmapByName("bg_png");
+            // this.addChild(sky);
+            var resetBtn = new eui.Button;
+            resetBtn.label = "重新开始";
+            resetBtn.right = 0;
+            resetBtn.top = 0;
+            resetBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.restartGame, this);
+            var backBtn = new eui.Button;
+            backBtn.label = "back";
+            backBtn.right = 0;
+            backBtn.top = 30;
+            backBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onBackBtnClicked, this);
+            // var wholeSP:egret.Sprite = new egret.Sprite;
+            this.wholeSP = new eui.UILayer;
+            this.wholeSP.width = this.stage.stageWidth;
+            this.wholeSP.height = this.stage.stageHeight;
+            this.wholeSP.addChild(sky);
+            this.wholeSP.addChild(resetBtn);
+            this.wholeSP.addChild(backBtn);
+            this.result1 = new egret.TextField;
+            this.setText(this.result1, "答对： " + this.rightNumber);
+            this.wholeSP.addChild(this.result1);
+            this.result2 = new egret.TextField;
+            this.setText(this.result2, "答错： " + this.wrongNumber);
+            this.result2.y = 30;
+            this.wholeSP.addChild(this.result2);
+            this.oushuGarbage = new eui.Image;
+            this.oushuGarbage.texture = RES.getRes("oushu_png");
+            this.oushuGarbage.x = (this.wholeSP.width / 2 - this.oushuGarbage.width) / 2;
+            this.oushuGarbage.y = (this.wholeSP.height - this.oushuGarbage.height);
+            this.wholeSP.addChild(this.oushuGarbage);
+            this.oushuBounds = this.oushuGarbage.getBounds();
+            this.oushuBounds.x = this.oushuGarbage.x;
+            this.oushuBounds.y = this.oushuGarbage.y;
+            this.qishuGarbage = new eui.Image;
+            this.qishuGarbage.texture = RES.getRes("qishu_png");
+            this.qishuGarbage.x = this.wholeSP.width / 2 + (this.wholeSP.width / 2 - this.qishuGarbage.width) / 2;
+            this.qishuGarbage.y = (this.wholeSP.height - this.qishuGarbage.height);
+            this.wholeSP.addChild(this.qishuGarbage);
+            this.qishuBounds = this.qishuGarbage.getBounds();
+            this.qishuBounds.x = this.qishuGarbage.x;
+            this.qishuBounds.y = this.qishuGarbage.y;
+            this.addTrashes();
+            this.addChild(this.wholeSP);
+        }
+        else
+            (this.wholeSP.visible = true);
+        console.log(this.wholeSP);
     };
     p.removeOtherImageMoveListeners = function () {
         for (var i = 0; i < this.spArray.length; i++) {
